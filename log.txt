@@ -1,0 +1,4 @@
+2022/2/25-27 Reading through 'Writing Compiler by yourself' 8'th chapter 'Lexical analysis by using flex'.
+Also referencing Stanfords compiler handouts on flex.
+Modifying scanner.l and token.h to match lexical items of CAIE Pseudocode.
+Succeed in Converting CAIE Pseudocode code into seperate tokens.
