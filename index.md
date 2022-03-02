@@ -2,12 +2,6 @@
 <link rel="stylesheet" href="github-markdown.css">
 <link href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/atelier-lakeside-dark.min.css" rel="stylesheet"/>
 
-<style>
-    h1{
-        font-weight: bold;
-    }
-</style>
-
 <script src="https://cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script src="https://cdn.bootcss.com/highlightjs-line-numbers.js/1.1.0/highlightjs-line-numbers.min.js"></script>
@@ -16,104 +10,104 @@
 
 <h1 style="color: #E21951">The Pseudocode Compiler</h1>
 
-<h2 style="color: #E21951">The Full Compiling Process</h2>
+<h2 style="color: #E21951; font-weight: bold">The Full Compiling Process</h2>
 
 1. Input the source code(CAIE Pseudocode).  
 2. Convert source code into IR(Intermediate representation).  
 3. Convert IR into Assembly(RISC-V Assembly).
 (And the Assembler will turn Assembly Language into machine code which is executable)  
 
-<h2 style="color: #E21951">Lexer(Lexical Analyzer)</h2>
+<h2 style="color: #E21951; font-weight: bold">Lexer(Lexical Analyzer)</h2>
 
 <h3 style="color: #E21951">Source code(scanner.l)</h3>
 
 
 ```
-%{
-    #include "token.h"
-    int cur_line_num = 1;
-    void init_scanner();
-    void lex_error(char* msg, int line);
-%}
+    %{
+        #include "token.h"
+        int cur_line_num = 1;
+        void init_scanner();
+        void lex_error(char* msg, int line);
+    %}
 
-/* Definitions, note: \042 is '"' */
-INTEGER             ([0-9]+)
-BOOLEAN             ("TRUE"|"FALSE")
-UNTERM_STRING       (\042[^\042\n]*)
-STRING              (\042[^\042\n]*\042)
-UNTERM_CHAR         ('[^'\n])
-CHAR                ('[^'\n]')
-IDENTIFIER          ([_a-zA-Z][_a-zA-Z0-9]*)
-OPERATOR            ([+-*/%=,:!<>()\133\135{}])
-SINGLE_COMMENT1     ("//"[^\n]*)
-%%
+    /* Definitions, note: \042 is '"' */
+    INTEGER             ([0-9]+)
+    BOOLEAN             ("TRUE"|"FALSE")
+    UNTERM_STRING       (\042[^\042\n]*)
+    STRING              (\042[^\042\n]*\042)
+    UNTERM_CHAR         ('[^'\n])
+    CHAR                ('[^'\n]')
+    IDENTIFIER          ([_a-zA-Z][_a-zA-Z0-9]*)
+    OPERATOR            ([+-*/%=,:!<>()\133\135{}])
+    SINGLE_COMMENT1     ("//"[^\n]*)
+    %%
 
-[\n]                { cur_line_num++;                       }
-[ \t\r\a]+          { /* ignore all spaces */               }
-{SINGLE_COMMENT1}   { /* skip for single line comment */    }
+    [\n]                { cur_line_num++;                       }
+    [ \t\r\a]+          { /* ignore all spaces */               }
+    {SINGLE_COMMENT1}   { /* skip for single line comment */    }
 
-{OPERATOR}          { return yytext[0];         }   
+    {OPERATOR}          { return yytext[0];         }   
 
-"DECLARE"           { return T_Declare;         }
-"<-"                { return T_Lm;              }
-"INTEGER"           { return T_Integer;         }
-"REAL"              { return T_Real;            }
-"BOOLEAN"           { return T_Boolean;         }
-"<="                { return T_Le;              }
-">="                { return T_Ge;              }
-"<>"                { return T_Ne;              }
-"MOD"               { return T_Mod;             }
-"AND"               { return T_And;             }
-"OR"                { return T_Or;              }
-"FOR"               { return T_For;             }
-"NEXT"              { return T_Next;            }
-"WHILE"             { return T_While;           }
-"ENDWHILE"          { return T_Endwhile;        }
-"IF"                { return T_If;              }
-"ELSE"              { return T_Else;            }
-"THEN"              { return T_Then;            }
-"ENDIF"             { return T_Endif;           }
-"RETURN"            { return T_Return;          }
-"INPUT"             { return T_Input;           }
-"OUTPUT"            { return T_Output;          }
+    "DECLARE"           { return T_Declare;         }
+    "<-"                { return T_Lm;              }
+    "INTEGER"           { return T_Integer;         }
+    "REAL"              { return T_Real;            }
+    "BOOLEAN"           { return T_Boolean;         }
+    "<="                { return T_Le;              }
+    ">="                { return T_Ge;              }
+    "<>"                { return T_Ne;              }
+    "MOD"               { return T_Mod;             }
+    "AND"               { return T_And;             }
+    "OR"                { return T_Or;              }
+    "FOR"               { return T_For;             }
+    "NEXT"              { return T_Next;            }
+    "WHILE"             { return T_While;           }
+    "ENDWHILE"          { return T_Endwhile;        }
+    "IF"                { return T_If;              }
+    "ELSE"              { return T_Else;            }
+    "THEN"              { return T_Then;            }
+    "ENDIF"             { return T_Endif;           }
+    "RETURN"            { return T_Return;          }
+    "INPUT"             { return T_Input;           }
+    "OUTPUT"            { return T_Output;          }
 
-{INTEGER}           { return T_IntConstant;     }
-{BOOLEAN}           { return T_BoolConstant;    }
-{STRING}            { return T_StringConstant;  }
-{CHAR}              { return T_CharConstant;    }
-{IDENTIFIER}        { return T_Identifier;      }
+    {INTEGER}           { return T_IntConstant;     }
+    {BOOLEAN}           { return T_BoolConstant;    }
+    {STRING}            { return T_StringConstant;  }
+    {CHAR}              { return T_CharConstant;    }
+    {IDENTIFIER}        { return T_Identifier;      }
 
-<<EOF>>             { return 0; }
+    <<EOF>>             { return 0; }
 
 
-{UNTERM_STRING}     { lex_error("Unterminated string constant", cur_line_num);  }
-{UNTERM_CHAR}       { lex_error("Unterminated char constant", cur_line_num);    }
-.                   { lex_error("Unrecognized character", cur_line_num);        }
+    {UNTERM_STRING}     { lex_error("Unterminated string constant", cur_line_num);  }
+    {UNTERM_CHAR}       { lex_error("Unterminated char constant", cur_line_num);    }
+    .                   { lex_error("Unrecognized character", cur_line_num);        }
 
-%%
+    %%
 
-int main(int argc, char* argv[]) {
-    int token;
-    init_scanner();
-    while (token = yylex()) {
-        print_token(token);
-        puts(yytext);
+    int main(int argc, char* argv[]) {
+        int token;
+        init_scanner();
+        while (token = yylex()) {
+            print_token(token);
+            puts(yytext);
+        }
+        return 0;
     }
-    return 0;
-}
 
-void init_scanner() {
-    printf("%-20s%s\n", "TOKEN-TYPE", "TOKEN-VALUE");
-    printf("-------------------------------------------------\n");
-}
+    void init_scanner() {
+        printf("%-20s%s\n", "TOKEN-TYPE", "TOKEN-VALUE");
+        printf("-------------------------------------------------\n");
+    }
 
-void lex_error(char* msg, int line) {
-    printf("\nError at line %-3d: %s\n\n", line, msg);
-}
+    void lex_error(char* msg, int line) {
+        printf("\nError at line %-3d: %s\n\n", line, msg);
+    }
 
-int yywrap(void) {
-    return 1;
-}
+    int yywrap(void) {
+        return 1;
+    }
 ```
 
 What the lexer(scanner) does is to convert raw text source code into tokens.  
@@ -179,9 +173,9 @@ Single quotes could exist in regular expressions so there is no need to convert 
 Basic syntax errors could be reported by the lexer.  
 1. Unrecognized character 
 
-<h2 style="color: #E21951">Parser</h2>
+<h2 style="color: #E21951; font-weight: bold">Parser</h2>
 
-<h2 style="color: #E21951">References</h2>
+## __References__
 1. http://web.stanford.edu/class/archive/cs/cs143/cs143.1128/handouts/050%20Flex%20In%20A%20Nutshell.pdf flex Rules  
 2. https://www3.nd.edu/~dthain/compilerbook/compilerbook.pdf Chapter3 Kinds of Tokens  
 3. https://holub.com/goodies/compiler/compilerDesignInC.pdf  
