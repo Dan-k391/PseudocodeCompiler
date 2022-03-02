@@ -1,17 +1,3 @@
-<style>
-    h1{
-        color: #E21951; 
-    }
-    
-    h2{
-        color: #E21951; 
-    }
-    
-    h3{
-        color: #E21951; 
-    }
-</style>
-
 # __The Pseudocode Compiler__
 
 ## __The full Compiling Process__
@@ -180,4 +166,19 @@ Basic syntax errors could be reported by the lexer.
 4. https://www.cs.virginia.edu/~cr4bd/flex-manual/Patterns.html#Patterns
 5. https://www.cs.virginia.edu/~cr4bd/flex-manual/Matching.html#Matching
 6. http://web.stanford.edu/class/archive/cs/cs143/cs143.1128/handouts/050%20Flex%20In%20A%20Nutshell.pdf 
+
+<style>
+    h1{
+        color: #E21951; 
+    }
+    
+    h2{
+        color: #E21951; 
+    }
+    
+    h3{
+        color: #E21951; 
+    }
+</style>
+
 
