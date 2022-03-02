@@ -1,5 +1,5 @@
 <style>
-	h3, h2, h1{
+    h3, h2, h1{
         color: #E21951; 
     }
 </style>
