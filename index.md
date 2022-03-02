@@ -1,12 +1,18 @@
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="github-markdown.css">
-</style>
 <link href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/atelier-lakeside-dark.min.css" rel="stylesheet"/>
+
+<style>
+    h1{
+        font-weight: bold;
+    }
+</style>
+
 <script src="https://cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script src="https://cdn.bootcss.com/highlightjs-line-numbers.js/1.1.0/highlightjs-line-numbers.min.js"></script>
 <script>hljs.initLineNumbersOnLoad();</script>
+
 
 <h1 style="color: #E21951">The Pseudocode Compiler</h1>
 
@@ -24,10 +30,10 @@
 
 ```
 %{
-#include "token.h"
-int cur_line_num = 1;
-void init_scanner();
-void lex_error(char* msg, int line);
+    #include "token.h"
+    int cur_line_num = 1;
+    void init_scanner();
+    void lex_error(char* msg, int line);
 %}
 
 /* Definitions, note: \042 is '"' */
@@ -38,7 +44,7 @@ STRING              (\042[^\042\n]*\042)
 UNTERM_CHAR         ('[^'\n])
 CHAR                ('[^'\n]')
 IDENTIFIER          ([_a-zA-Z][_a-zA-Z0-9]*)
-OPERATOR            ([+*-/%=,:!<>()\133\135{}])
+OPERATOR            ([+-*/%=,:!<>()\133\135{}])
 SINGLE_COMMENT1     ("//"[^\n]*)
 %%
 
@@ -110,7 +116,7 @@ int yywrap(void) {
 }
 ```
 
-What the lexer does is to convert raw text source code into tokens.  
+What the lexer(scanner) does is to convert raw text source code into tokens.  
 
 In most programming languages there are these token categories. *[2]*
 - Keywords are words in the language structure itself, like WHILE or IF or TRUE.
@@ -175,7 +181,7 @@ Basic syntax errors could be reported by the lexer.
 
 <h2 style="color: #E21951">Parser</h2>
 
-## __References__
+<h2 style="color: #E21951">References</h2>
 1. http://web.stanford.edu/class/archive/cs/cs143/cs143.1128/handouts/050%20Flex%20In%20A%20Nutshell.pdf flex Rules  
 2. https://www3.nd.edu/~dthain/compilerbook/compilerbook.pdf Chapter3 Kinds of Tokens  
 3. https://holub.com/goodies/compiler/compilerDesignInC.pdf  
