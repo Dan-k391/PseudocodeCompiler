@@ -22,7 +22,7 @@
 <h3 style="color: #E21951">Source code(scanner.l)</h3>
 
 
-```
+```c
  %{
      #include "token.h"
      int cur_line_num = 1;
