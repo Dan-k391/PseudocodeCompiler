@@ -21,8 +21,7 @@
 
 <h3 style="color: #E21951">Source code(scanner.l)</h3>
 
-
-```cpp
+```
  %{
      #include "token.h"
      int cur_line_num = 1;
@@ -175,7 +174,8 @@ Basic syntax errors could be reported by the lexer.
 
 <h2 style="color: #E21951; font-weight: bold">Parser</h2>
 
-<h2 style="color: #E21951; font-weight: bold">References</h2>
+<h2 style="color: #E21951; font-weight: bold">Reference</h2>
+
 1. http://web.stanford.edu/class/archive/cs/cs143/cs143.1128/handouts/050%20Flex%20In%20A%20Nutshell.pdf flex Rules  
 2. https://www3.nd.edu/~dthain/compilerbook/compilerbook.pdf Chapter3 Kinds of Tokens  
 3. https://holub.com/goodies/compiler/compilerDesignInC.pdf  
