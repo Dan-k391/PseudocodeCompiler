@@ -8,7 +8,7 @@
 <script>hljs.initLineNumbersOnLoad();</script>
 
 
-<h1 style="color: #E21951">The Pseudocode Compiler</h1>
+<h1 style="color: #E21951; font-weight: bold">The Pseudocode Compiler</h1>
 
 <h2 style="color: #E21951; font-weight: bold">The Full Compiling Process</h2>
 
@@ -23,91 +23,91 @@
 
 
 ```
-    %{
-        #include "token.h"
-        int cur_line_num = 1;
-        void init_scanner();
-        void lex_error(char* msg, int line);
-    %}
+ %{
+     #include "token.h"
+     int cur_line_num = 1;
+     void init_scanner();
+     void lex_error(char* msg, int line);
+ %}
 
-    /* Definitions, note: \042 is '"' */
-    INTEGER             ([0-9]+)
-    BOOLEAN             ("TRUE"|"FALSE")
-    UNTERM_STRING       (\042[^\042\n]*)
-    STRING              (\042[^\042\n]*\042)
-    UNTERM_CHAR         ('[^'\n])
-    CHAR                ('[^'\n]')
-    IDENTIFIER          ([_a-zA-Z][_a-zA-Z0-9]*)
-    OPERATOR            ([+-*/%=,:!<>()\133\135{}])
-    SINGLE_COMMENT1     ("//"[^\n]*)
-    %%
+ /* Definitions, note: \042 is '"' */
+ INTEGER             ([0-9]+)
+ BOOLEAN             ("TRUE"|"FALSE")
+ UNTERM_STRING       (\042[^\042\n]*)
+ STRING              (\042[^\042\n]*\042)
+ UNTERM_CHAR         ('[^'\n])
+ CHAR                ('[^'\n]')
+ IDENTIFIER          ([_a-zA-Z][_a-zA-Z0-9]*)
+ OPERATOR            ([+-*/%=,:!<>()\133\135{}])
+ SINGLE_COMMENT1     ("//"[^\n]*)
+ %%
+ 
+ [\n]                { cur_line_num++;                       }
+ [ \t\r\a]+          { /* ignore all spaces */               }
+ {SINGLE_COMMENT1}   { /* skip for single line comment */    }
 
-    [\n]                { cur_line_num++;                       }
-    [ \t\r\a]+          { /* ignore all spaces */               }
-    {SINGLE_COMMENT1}   { /* skip for single line comment */    }
+ {OPERATOR}          { return yytext[0];         }   
 
-    {OPERATOR}          { return yytext[0];         }   
+ "DECLARE"           { return T_Declare;         }
+ "<-"                { return T_Lm;              }
+ "INTEGER"           { return T_Integer;         }
+ "REAL"              { return T_Real;            }
+ "BOOLEAN"           { return T_Boolean;         }
+ "<="                { return T_Le;              }
+ ">="                { return T_Ge;              }
+ "<>"                { return T_Ne;              }
+ "MOD"               { return T_Mod;             }
+ "AND"               { return T_And;             }
+ "OR"                { return T_Or;              }
+ "FOR"               { return T_For;             }
+ "NEXT"              { return T_Next;            }
+ "WHILE"             { return T_While;           }
+ "ENDWHILE"          { return T_Endwhile;        }
+ "IF"                { return T_If;              }
+ "ELSE"              { return T_Else;            }
+ "THEN"              { return T_Then;            }
+ "ENDIF"             { return T_Endif;           }
+ "RETURN"            { return T_Return;          }
+ "INPUT"             { return T_Input;           }
+ "OUTPUT"            { return T_Output;          }
 
-    "DECLARE"           { return T_Declare;         }
-    "<-"                { return T_Lm;              }
-    "INTEGER"           { return T_Integer;         }
-    "REAL"              { return T_Real;            }
-    "BOOLEAN"           { return T_Boolean;         }
-    "<="                { return T_Le;              }
-    ">="                { return T_Ge;              }
-    "<>"                { return T_Ne;              }
-    "MOD"               { return T_Mod;             }
-    "AND"               { return T_And;             }
-    "OR"                { return T_Or;              }
-    "FOR"               { return T_For;             }
-    "NEXT"              { return T_Next;            }
-    "WHILE"             { return T_While;           }
-    "ENDWHILE"          { return T_Endwhile;        }
-    "IF"                { return T_If;              }
-    "ELSE"              { return T_Else;            }
-    "THEN"              { return T_Then;            }
-    "ENDIF"             { return T_Endif;           }
-    "RETURN"            { return T_Return;          }
-    "INPUT"             { return T_Input;           }
-    "OUTPUT"            { return T_Output;          }
+ {INTEGER}           { return T_IntConstant;     }
+ {BOOLEAN}           { return T_BoolConstant;    }
+ {STRING}            { return T_StringConstant;  }
+ {CHAR}              { return T_CharConstant;    }
+ {IDENTIFIER}        { return T_Identifier;      }
 
-    {INTEGER}           { return T_IntConstant;     }
-    {BOOLEAN}           { return T_BoolConstant;    }
-    {STRING}            { return T_StringConstant;  }
-    {CHAR}              { return T_CharConstant;    }
-    {IDENTIFIER}        { return T_Identifier;      }
-
-    <<EOF>>             { return 0; }
+ <<EOF>>             { return 0; }
 
 
-    {UNTERM_STRING}     { lex_error("Unterminated string constant", cur_line_num);  }
-    {UNTERM_CHAR}       { lex_error("Unterminated char constant", cur_line_num);    }
-    .                   { lex_error("Unrecognized character", cur_line_num);        }
+ {UNTERM_STRING}     { lex_error("Unterminated string constant", cur_line_num);  }
+ {UNTERM_CHAR}       { lex_error("Unterminated char constant", cur_line_num);    }
+ .                   { lex_error("Unrecognized character", cur_line_num);        }
 
-    %%
+ %%
 
-    int main(int argc, char* argv[]) {
-        int token;
-        init_scanner();
-        while (token = yylex()) {
-            print_token(token);
-            puts(yytext);
-        }
-        return 0;
-    }
+ int main(int argc, char* argv[]) {
+     int token;
+     init_scanner();
+     while (token = yylex()) {
+         print_token(token);
+         puts(yytext);
+     }
+     return 0;
+ }
 
-    void init_scanner() {
-        printf("%-20s%s\n", "TOKEN-TYPE", "TOKEN-VALUE");
-        printf("-------------------------------------------------\n");
-    }
+ void init_scanner() {
+     printf("%-20s%s\n", "TOKEN-TYPE", "TOKEN-VALUE");
+     printf("-------------------------------------------------\n");
+ }
 
-    void lex_error(char* msg, int line) {
-        printf("\nError at line %-3d: %s\n\n", line, msg);
-    }
+ void lex_error(char* msg, int line) {
+     printf("\nError at line %-3d: %s\n\n", line, msg);
+ }
 
-    int yywrap(void) {
-        return 1;
-    }
+ int yywrap(void) {
+     return 1;
+ }
 ```
 
 What the lexer(scanner) does is to convert raw text source code into tokens.  
@@ -137,8 +137,8 @@ X+ means that X is repeated once or more.
 
 <h3 style="color: #E21951">BOOLEAN</h3>
 
-The pattern of boolean is ___"TRUE"|"FALSE"___.  
-- ___X | Y___ means either an X or a Y.  
+The pattern of boolean is ___"TRUE"\|"FALSE"___.  
+- ___X \| Y___ means either an X or a Y.  
 
 Either "TRUE" or "FALSE" would match this pattern.
 
