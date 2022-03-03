@@ -87,7 +87,7 @@ int yywrap(void) {
 ```
 
 What the lexer(scanner) does is to convert raw text source code into tokens.  
-Basically when the scanner is run, it looks for strings matching the pattern. After match is determined, the action(s) corresponding to the matched pattern is then executed. *[5]*  
+@@ -126,23 +130,23 @@ Basically when the scanner is run, it looks for strings matching the pattern. After match is determined, the action(s) corresponding to the matched pattern is then executed. *[5]*  
 
 ___*Tip: All regular expressions(patterns) in this article will be bold and italic.(The same font as this sentence)___
 
@@ -111,7 +111,7 @@ Either "TRUE" or "FALSE" would match this pattern.
 
 According to the CAIE Pseudocode guide, a string is a sequence of zero or more characters, and should be delimited by double quotes.  
 
-The final pattern for string constant is ___\042[^\042\n]*\042___.  
+@@ -161,20 +165,20 @@ The final pattern for string constant is ___\042[^\042\n]*\042___.  
 This technique is also used when matching square brackets because they also could not appear in regular expressions.  
 In the pattern of operators ___[+*-/%=,:!<>()\133\135{}]___: \133 is the left square bracket and \135 is the right square bracket.  
 
