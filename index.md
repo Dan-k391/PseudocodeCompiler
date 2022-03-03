@@ -1,24 +1,15 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="github-markdown.css">
-<link href="https://cdn.bootcss.com/highlight.js/9.6.0/styles/atelier-lakeside-dark.min.css" rel="stylesheet"/>
-<script src="https://cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<script src="https://cdn.bootcss.com/highlightjs-line-numbers.js/1.1.0/highlightjs-line-numbers.min.js"></script>
-<script>hljs.initLineNumbersOnLoad();</script>
+# __The Pseudocode Compiler__
 
-
-<h1 style="color: #E21951; font-weight: bold">The Pseudocode Compiler</h1>
-
-<h2 style="color: #E21951; font-weight: bold">The Full Compiling Process</h2>
+## The Full Compiling Process
 
 1. Input the source code(CAIE Pseudocode).  
 2. Convert source code into IR(Intermediate representation).  
 3. Convert IR into Assembly(RISC-V Assembly).
 (And the Assembler will turn Assembly Language into machine code which is executable)  
 
-<h2 style="color: #E21951; font-weight: bold">Lexer(Lexical Analyzer)</h2>
+## Lexer(Lexical Analyzer)
 
-<h3 style="color: #E21951">Source code(scanner.l)</h3>
+### Source code(scanner.l)
 
 ```
 %{
@@ -96,11 +87,11 @@ int yywrap(void) {
 ```
 
 What the lexer(scanner) does is to convert raw text source code into tokens.  
-@@ -126,23 +130,23 @@ Basically when the scanner is run, it looks for strings matching the pattern. Af
+Basically when the scanner is run, it looks for strings matching the pattern. After match is determined, the action(s) corresponding to the matched pattern is then executed. *[5]*  
 
 ___*Tip: All regular expressions(patterns) in this article will be bold and italic.(The same font as this sentence)___
 
-<h3 style="color: #E21951">INTEGER</h3>
+### INTEGER
 
 ___[0-9]+___ includes all integers. *[1]*  
 X+ means that X is repeated once or more.  
@@ -108,7 +99,7 @@ X+ means that X is repeated once or more.
 - This pattern matches digit characters.  
 - e.g: 2345 would match this pattern.
 
-<h3 style="color: #E21951">BOOLEAN</h3>
+### BOOLEAN
 
 The pattern of boolean is ___"TRUE"\|"FALSE"___.  
 - ___X \| Y___ means either an X or a Y.  
@@ -116,11 +107,11 @@ The pattern of boolean is ___"TRUE"\|"FALSE"___.
 Either "TRUE" or "FALSE" would match this pattern.
 
 
-<h3 style="color: #E21951">STRING</h3>
+### STRING
 
 According to the CAIE Pseudocode guide, a string is a sequence of zero or more characters, and should be delimited by double quotes.  
 
-@@ -161,20 +165,20 @@ The final pattern for string constant is ___\042[^\042\n]*\042___.
+The final pattern for string constant is ___\042[^\042\n]*\042___.  
 This technique is also used when matching square brackets because they also could not appear in regular expressions.  
 In the pattern of operators ___[+*-/%=,:!<>()\133\135{}]___: \133 is the left square bracket and \135 is the right square bracket.  
 
@@ -130,14 +121,14 @@ In the same way, a char is a single character which is delimited by single quote
 Meaning that the object scanned starts and ends with a single qoute and Contains any character except single quote or a line break.  
 Single quotes could exist in regular expressions so there is no need to convert them into ASCII codes.  
 
-<h3 style="color: #E21951">Errors</h3>
+### Errors
 
 Basic syntax errors could be reported by the lexer.  
 1. Unrecognized character 
 
-<h2 style="color: #E21951; font-weight: bold">Parser</h2>
+## Parser
 
-<h2 style="color: #E21951; font-weight: bold">Reference</h2>
+## Reference
 
 1. http://web.stanford.edu/class/archive/cs/cs143/cs143.1128/handouts/050%20Flex%20In%20A%20Nutshell.pdf flex Rules  
 2. https://www3.nd.edu/~dthain/compilerbook/compilerbook.pdf Chapter3 Kinds of Tokens  
