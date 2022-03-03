@@ -124,7 +124,7 @@ According to the CAIE Pseudocode guide, a string is a sequence of zero or more c
 This technique is also used when matching square brackets because they also could not appear in regular expressions.  
 In the pattern of operators ___[+*-/%=,:!<>()\133\135{}]___: \133 is the left square bracket and \135 is the right square bracket.  
 
-<h3 style="color: #E21951">CHAR</h3>
+### CHAR
 
 In the same way, a char is a single character which is delimited by single quotes could be expressed with the pattern ___'[^'\n]'___.  
 Meaning that the object scanned starts and ends with a single qoute and Contains any character except single quote or a line break.  
