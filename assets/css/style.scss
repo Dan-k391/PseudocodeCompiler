@@ -2,6 +2,15 @@
 ---
 
 @import "jekyll-theme-cayman";
+.main-content{
+  h1, h2, h3{
+   color: #E21951;
+  }
+  h1{
+    font-weight: bold;
+  }
+}
 .hljs.hljs-line-numbers{
   margin-right: 1em;
 }
+
