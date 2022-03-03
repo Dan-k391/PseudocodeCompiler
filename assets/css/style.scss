@@ -1,6 +1,9 @@
 ---
 ---
-@import "{{ site.theme }}";
-.main-content: first-child{
+
+@import "jekyll-theme-cayman";
+.main-content{
+  first-child{
     margin-right: 1em;
+  }
 }
