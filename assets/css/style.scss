@@ -1,7 +1,7 @@
 ---
 ---
 
-@import "jekyll-theme-cayman";
+@import "{{ site.theme }}";
 .main-content{
   h1, h2, h3{
    color: #E21951;
