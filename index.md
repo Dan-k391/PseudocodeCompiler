@@ -13,10 +13,10 @@
 
 ```
 %{
-	#include "token.h"
-	int cur_line_num = 1;
-	void init_scanner();
-	void lex_error(char* msg, int line);
+  #include "token.h"
+  int cur_line_num = 1;
+  void init_scanner();
+  void lex_error(char* msg, int line);
 %}
 /* Definitions, note: \042 is '"' */
 INTEGER             ([0-9]+)
