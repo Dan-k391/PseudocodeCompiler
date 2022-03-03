@@ -11,7 +11,7 @@
 
 ### Source code(scanner.l)
 
-```
+```c
 %{
   #include "token.h"
   int cur_line_num = 1;
