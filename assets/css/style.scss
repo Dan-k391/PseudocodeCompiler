@@ -1,3 +1,6 @@
 ---
 ---
 @import "{{ site.theme }}";
+.hljs perl{
+  margin: 0.5em;
+}
