@@ -6,6 +6,44 @@
   h1, h2, h3{
    color: #E21951;
   }
+  h2, h3, h4, h5, h6{
+    font-weight: normal;
+  }
+
+  h2{
+    padding: 0;
+    margin-top: 12px;
+    margin-bottom: 8px;
+  }
+  
+  hr{
+    height: 2px;
+  }
+  h1{
+      font-weight: bold;
+  }
+
+  h1, h2, h3, h4 {
+      color: #E21951;
+  }
+
+  hr{
+      background-color: #E21951;
+  }
+
+  .tophr{
+      margin-top: 24px;
+      margin-bottom: 0px;
+      margin-left: 0;
+      margin-right: 0;
+  }
+
+  .bottomhr{
+      margin-top: 0px;
+      margin-bottom: 24px;
+      margin-left: 0;
+      margin-right: 0;
+  }
 }
 .hljs.hljs-line-numbers{
   margin-right: 1em;
