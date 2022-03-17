@@ -185,7 +185,7 @@ Basically, when the scanner is run, it looks for strings matching the pattern. A
 ___*Tip: All regular expressions (patterns) in this article will be bold and italic. (The same font as this sentence)___
 
 Flex input files are structured as followed. *[10]*
-```flex
+```lex
 %{
 Declarations
 %}
@@ -205,7 +205,7 @@ recognizing each token.
 ### 4.2. Source code
 
 #### scanner.l
-```flex{.line-numbers}
+```lex{.line-numbers}
 %{
 /* Declarations */
 #include "token.h"
