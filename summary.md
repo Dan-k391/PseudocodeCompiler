@@ -205,7 +205,7 @@ recognizing each token.
 ### 4.2. Source code
 
 #### scanner.l
-```{.line-numbers}
+```flex{.line-numbers}
 %{
 /* Declarations */
 #include "token.h"
