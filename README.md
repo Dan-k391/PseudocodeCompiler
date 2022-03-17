@@ -1,8 +1,6 @@
 # PseudocodeCompiler
 A CAIE-Pseudocode compiler based on linux.
 
-The doc is [here](https://gitee.com/dan_k391/PseudocodeCompiler/blob/main/summary.md)
-
 Requirements:
 1 flex. (sudo apt-get install flex)
 
